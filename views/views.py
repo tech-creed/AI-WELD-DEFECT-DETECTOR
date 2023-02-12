@@ -94,7 +94,7 @@ def logout():
 
 #-------------------------------------------------------------------------#
 # Dashboard
-@app.route("/dashbard", methods=["POST", "GET"])
+@app.route("/dashboard", methods=["POST", "GET"])
 def upload():
     if "email" in session:
         return render_template('upload.html')
