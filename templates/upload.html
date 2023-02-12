@@ -16,8 +16,8 @@
 
     <section class="py-4 py-xl-5">
         <h2 class="text-center mt-0">Upload Image</h2>
-        <hr class="divider" />
-        <form action="#">
+        <hr class="divider"/>
+        <form action="/upload" method="post" enctype="multipart/form-data"  id='filepicker'>
             <div class="container">
                 <div class="border rounded border-0 border-dark overflow-hidden" style="background:#fff;">
                     <div class="row g-0">
@@ -25,16 +25,20 @@
                             <div id="indicatorContainerWrap">
                                 <div class="rad-prg" id="indicatorContainer"></div>
                                 <div class="rad-cntnt">Click / Drop file to select.</div>
-                                <input onchange="loadFile(event)" type="file" id="prgFileSelector" />
+                                <input onchange="loadFile(event)" type="file" name="file" id="prgFileSelector" />
                             </div>
                         </div>
-                        <div class="col-md-6 order-md-last" style="min-height: 250px;"><img
+                        <div class="col-md-6 order-md-last" style="min-height: 250px;padding: 30px;"><img
                                 class="w-100 h-100 fit-cover" id="output" accept="image/*"></div>
-                    </div>
+                        </div>
+                        <div style="text-align: center;padding: 20px 0px 10px 0px;">
+                            <label for="id">ID of Image</label>
+                            <input id='Id' name="Id" type="text">
+                        </div>
                 </div>
             </div>
             <div class="btn1">
-                <button class="btn btn-clr btn-xl">Upload</button>
+                <button type="submit" class="btn btn-clr btn-xl">Analyse</button>
             </div>
         </form>
     </section>

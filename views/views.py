@@ -7,6 +7,8 @@ from os import walk
 
 import bcrypt
 
+from utilss.upload import allowed_file, erase_dir, file_saver
+
 #-------------------------------------------------------------------------#
 # Main Page
 @app.route('/')
@@ -98,5 +100,49 @@ def logout():
 def upload():
     if "email" in session:
         return render_template('upload.html')
+    else:
+        return redirect('/login')
+
+#-------------------------------------------------------------------------#
+#Upload Get
+@app.route('/upload', methods=['GET'])
+def UploadGet():
+    if "email" in session:
+        return render_template('upload.html')
+    else:
+        return redirect('/login')
+
+#Upload Post
+@app.route('/upload', methods=['POST'])
+def UploadPost():
+    print('!!')
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
+
+    file = request.files['file']
+    if file.filename == '' :
+        flash('No image selected for uploading')
+        return redirect(request.url)
+
+    if file and allowed_file(file.filename):
+        erase_dir()
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename)) 
+        imgName = file_saver(file.filename, request.form["Id"])
+
+        make_augumentation(imgName,request.form["Id"])
+        detectDefect(imgName,request.form["Id"])
+        
+    else:
+        flash('Allowed image types are -> png, jpg, jpeg, bmp')
+        return redirect(request.url)
+        
+    return redirect(f'/result/{request.form["Id"]}')
+
+#Upload Get
+@app.route('/result/<id>', methods=['GET'])
+def Result(id):
+    if "email" in session:
+        return render_template('result.html', id=id)
     else:
         return redirect('/login')

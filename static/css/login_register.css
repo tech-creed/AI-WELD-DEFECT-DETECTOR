@@ -14,6 +14,25 @@ body{
     justify-content: center;
     background-color: #f4623a;
 }
+
+/* width */
+
+::-webkit-scrollbar {
+    width: 8px;
+  }
+  /* Track */
+  
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+  }
+  /* Handle */
+  
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(60deg, rgb(239, 84, 57), rgb(237, 57, 25));
+    border-radius: 10px;
+  }
+  
 .container{
     position: relative;
     max-width: 430px;
