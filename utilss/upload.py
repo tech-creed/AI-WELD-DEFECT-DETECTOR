@@ -12,7 +12,6 @@ def file_saver(filename, patient_id):
     if file[1] == ".bmp":
         Image.open(os.path.join(app.config['UPLOAD_FOLDER'], filename)).save(os.path.join(app.config['UPLOAD_FOLDER'],patient_id+'/'+filename.split('.')[0]) + '.png')
         Image.open(os.path.join(app.config['UPLOAD_FOLDER'], filename)).save(os.path.join(app.config['UPLOAD_FOLDER'],patient_id+'/') + 'org.png')
-        os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     else:
         Image.open(os.path.join(app.config['UPLOAD_FOLDER'], filename)).save(os.path.join(app.config['UPLOAD_FOLDER'],patient_id+'/'+filename.split('.')[0]) + '.png')
         Image.open(os.path.join(app.config['UPLOAD_FOLDER'], filename)).save(os.path.join(app.config['UPLOAD_FOLDER'],patient_id+'/') + 'org.png')

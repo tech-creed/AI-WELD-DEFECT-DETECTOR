@@ -9,11 +9,28 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/css/upload.css">
+    <link rel="stylesheet" href="static/css/style.css">
 
 </head>
 
 <body class="body">
 
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="#page-top">Defects Detector</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/dashboard">Upload</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/">Records</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/">Prfile</a></li>
+                    <li class="nav-item"><a class="nav-link log-btn" href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div><img src="" alt=""></div>
     <section class="py-4 py-xl-5">
         <h2 class="text-center mt-0">Upload Image</h2>
         <hr class="divider"/>
@@ -21,24 +38,33 @@
             <div class="container">
                 <div class="border rounded border-0 border-dark overflow-hidden" style="background:#fff;">
                     <div class="row g-0">
-                        <div class="col-md-6 text-center" style="padding:9% 0">
+                        <div class="col-md-6 text-center" style="padding:4% 0">
                             <div id="indicatorContainerWrap">
                                 <div class="rad-prg" id="indicatorContainer"></div>
                                 <div class="rad-cntnt">Click / Drop file to select.</div>
+                                <img id="loader" style="display: none;position: absolute;left: 530px;" src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/585d0331234507.564a1d239ac5e.gif" alt="" srcset="">
                                 <input onchange="loadFile(event)" type="file" name="file" id="prgFileSelector" />
                             </div>
                         </div>
-                        <div class="col-md-6 order-md-last" style="min-height: 250px;padding: 30px;"><img
-                                class="w-100 h-100 fit-cover" id="output" accept="image/*"></div>
+                        <div class="col-md-6 order-md-last" style="padding:20px"><img class="w-100 h-100 fit-cover" id="output" accept="image/*"></div>
                         </div>
-                        <div style="text-align: center;padding: 20px 0px 10px 0px;">
-                            <label for="id">ID of Image</label>
-                            <input id='Id' name="Id" type="text">
+                        <div style="text-align: center;">
+                            <div>
+                                <input id='Id' name="Id" style="width: 300px;" placeholder="ID of Image" type="text">
+                            </div>
+                            <div class="drop-div" style="margin: 10px;">
+                                <select name="select_id" class="drop" style="width: 28%;">
+                                    <option value="" hidden>Select Image Type</option>
+                                    <option value="xray">XRay Image</option>
+                                    <option value="normal">Normal Image</option>
+                                </select>
+                            </div> 
                         </div>
+                        
                 </div>
             </div>
             <div class="btn1">
-                <button type="submit" class="btn btn-clr btn-xl">Analyse</button>
+                <button type="submit" onclick="activate()" class="btn btn-clr btn-xl">Analyse</button>
             </div>
         </form>
     </section>
@@ -49,7 +75,11 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/radialIndicator/1.4.0/radialIndicator.js"></script>
-
+    <script>
+        function activate(){
+            document.getElementById('loader').style.display = 'block'
+        }
+    </script>
 </body>
 
 </html>

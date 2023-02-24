@@ -8,22 +8,35 @@ from PIL import Image, ImageOps
 from efficientnet.tfkeras import EfficientNetB4
 import cv2
 
-SIZE = 256
+sSIZE = 256
+cSIZE = 320
 
-def detectDefect(imagePath,id):
-    model = tf.keras.models.load_model(f"models\WeldDetectorModel.h5", compile=False)
+def detectDefectSeg(imagePath,id):
+    modelSeg = tf.keras.models.load_model("models/WeldDetectorModel.h5", compile=False)
 
-    X = np.zeros((1, SIZE, SIZE, 1))
+    X = np.zeros((1, sSIZE, sSIZE, 1))
     image = Image.open(imagePath)
-    image = np.array(image.resize((SIZE, SIZE)))
-    image = image.reshape((SIZE, SIZE, 1))
+    image = np.array(image.resize((sSIZE, sSIZE)))
+    image = image.reshape((sSIZE, sSIZE, 1))
     X[0,] = np.array(image) / 255.
-    pred = model.predict(X) 
+    pred = modelSeg.predict(X) 
 
     plt.axis('off')
     plt.imshow(image, cmap='gray')
-    plt.imshow(pred[0].reshape(SIZE,SIZE), cmap='coolwarm', alpha=0.4)
+    plt.imshow(pred[0].reshape(sSIZE,sSIZE), cmap='coolwarm', alpha=0.4)
     plt.savefig(f"static/uploads/{id}/mask.png", bbox_inches='tight', pad_inches=0)
+
+def detectDefectClas(imagePath,id):
+    modelCls = tf.keras.models.load_model("models/NormalCameraBestModel.h5", compile=False)
+
+    X = np.zeros((1, cSIZE, cSIZE, 3))
+    image = cv2.imread(imagePath)
+    image = cv2.resize(image.astype(np.uint8), (cSIZE, cSIZE))
+    X[0,] = np.array(image) / 255.
+    pred = modelCls.predict(X) 
+
+    defectClass = ['Crazing','Inclusion','Patches','Pitted','Rolled','Scratches']
+    return defectClass[np.argmax(pred)]
 
 #----------Augumenttaion-------------#
 def zoom_center(img, zoom_factor=1.5):

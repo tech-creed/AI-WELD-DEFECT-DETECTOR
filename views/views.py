@@ -131,18 +131,22 @@ def UploadPost():
         imgName = file_saver(file.filename, request.form["Id"])
 
         make_augumentation(imgName,request.form["Id"])
-        detectDefect(imgName,request.form["Id"])
+        if(request.form["select_id"] == 'xray'):
+            detectDefectSeg(imgName,request.form["Id"])
+            classification_output = 'Segmentation'
+        else:
+            classification_output = detectDefectClas(imgName,request.form["Id"])
         
     else:
         flash('Allowed image types are -> png, jpg, jpeg, bmp')
         return redirect(request.url)
         
-    return redirect(f'/result/{request.form["Id"]}')
+    return redirect(f'/result/{request.form["Id"]}/{classification_output}')
 
 #Upload Get
-@app.route('/result/<id>', methods=['GET'])
-def Result(id):
+@app.route('/result/<id>/<type>', methods=['GET'])
+def Result(id,type):
     if "email" in session:
-        return render_template('result.html', id=id)
+        return render_template('result.html', id=id,type=type)
     else:
         return redirect('/login')
